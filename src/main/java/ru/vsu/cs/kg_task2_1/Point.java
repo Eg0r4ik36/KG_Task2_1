@@ -25,7 +25,6 @@ public class Point {
         this.y = y;
     }
 
-    // Проверка, находится ли точка рядом с другой точкой
     public boolean isNear(Point other, double radius) {
         return Math.hypot(this.x - other.getX(), this.y - other.getY()) <= radius;
     }
