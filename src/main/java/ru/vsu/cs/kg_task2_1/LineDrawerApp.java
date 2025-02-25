@@ -23,17 +23,15 @@ public class LineDrawerApp extends Application {
         gc = canvas.getGraphicsContext2D();
         root.getChildren().add(canvas);
 
-        // Инициализация отрезка
         Point start = new Point(100, 100);
         Point end = new Point(300, 300);
         line = new Line(start, end, Color.RED, Color.BLUE);
 
-        // Обработка событий мыши
         canvas.setOnMousePressed(this::handleMousePressed);
         canvas.setOnMouseDragged(this::handleMouseDragged);
         canvas.setOnMouseReleased(this::handleMouseReleased);
 
-        drawLine(); // Нарисовать отрезок при запуске
+        drawLine();
 
         Scene scene = new Scene(root, 800, 600);
         primaryStage.setTitle("DDA Line Drawing with Color Interpolation");
@@ -41,19 +39,16 @@ public class LineDrawerApp extends Application {
         primaryStage.show();
     }
 
-    // Нарисовать отрезок
     private void drawLine() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight()); // Очистить холст
         DDAAlgorithm.drawLine(line, gc);
     }
 
-    // Обработка нажатия мыши
     private void handleMousePressed(MouseEvent event) {
         double mouseX = event.getX();
         double mouseY = event.getY();
         Point mousePoint = new Point(mouseX, mouseY);
 
-        // Проверяем, нажали ли на начало или конец отрезка
         if (line.getStart().isNear(mousePoint, 5)) {
             draggingStart = true;
         } else if (line.getEnd().isNear(mousePoint, 5)) {
@@ -61,7 +56,6 @@ public class LineDrawerApp extends Application {
         }
     }
 
-    // Обработка перемещения мыши
     private void handleMouseDragged(MouseEvent event) {
         double mouseX = event.getX();
         double mouseY = event.getY();
@@ -72,10 +66,9 @@ public class LineDrawerApp extends Application {
             line.setEnd(new Point(mouseX, mouseY));
         }
 
-        drawLine(); // Перерисовываем отрезок
+        drawLine();
     }
 
-    // Обработка отпускания мыши
     private void handleMouseReleased(MouseEvent event) {
         draggingStart = false;
         draggingEnd = false;
